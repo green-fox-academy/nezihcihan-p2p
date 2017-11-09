@@ -1,45 +1,17 @@
-.gradle
-/
-!gradle/wrapper/gradle-wrapper.jar
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-
-### IntelliJ IDEA ###
 .idea
-*.iws
-*.iml
-*.ipr
 
-### NetBeans ###
-nbproject/private/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-.idea/
 out
+
 *.xml
+
 *.iml
-*.gf
-*.json
 
-.idea/**/gradle.xml
+*.class
 
-.idea/**/libraries
+# for mac users
+
+.DS_Store
 
 .gradle
 
-
-/
-gradle-app.setting
-
-!gradle-wrapper.jar
-
-.gradletasknamecache
+!gradle-wrapper.properties
