@@ -22,7 +22,7 @@ public class MainController {
 
     @PostMapping("/login")
     public LogEntry home(HttpServletRequest request) {
-        LogEntry logEntry = new LogEntry();
+        LogEntry logEntry = new LogEntry(request);
         logRepository.save(logEntry);
         System.out.println(logEntry);
         return logEntry;
