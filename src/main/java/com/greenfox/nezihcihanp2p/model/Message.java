@@ -1,11 +1,19 @@
 package com.greenfox.nezihcihanp2p.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "messages")
 public class Message {
 
     @Id
@@ -13,35 +21,14 @@ public class Message {
     private long id;
 
     String message;
-
-    public Message() {
-    }
-
-    public Message(String message) {
-        this.message = message;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    Timestamp timestamp;
 
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }
