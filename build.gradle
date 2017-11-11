@@ -27,6 +27,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.springframework.boot:spring-boot-devtools')
+	compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
 	compileOnly('org.projectlombok:lombok')
+	runtime('com.h2database:h2')
+	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
 }
