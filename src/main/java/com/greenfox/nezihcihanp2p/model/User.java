@@ -4,24 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
+@Component
 @Entity
-@Table(name = "messages")
-public class Message {
+@Table(name = "users")
+
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    String message;
+    @Column(unique = true)
     String userName;
-    Timestamp timestamp;
 }

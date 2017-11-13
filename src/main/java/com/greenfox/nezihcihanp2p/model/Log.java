@@ -1,49 +1,72 @@
 package com.greenfox.nezihcihanp2p.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.springframework.stereotype.Component;
+import java.sql.Timestamp;
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
+@Entity
 public class Log {
 
-    private Timestamp date;
-    private String logLevel;
-    private String path;
-    private String method;
-    private String requestData;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Log(String path, String method, String requestData) {
-        this.path = path;
-        this.method = method;
+//  Timestamp date = new Timestamp(System.currentTimeMillis());  //import java.sql.Timestamp;
+
+//  @Temporal(TemporalType.TIMESTAMP)
+//  private Date dateCreated;  //import java.util.Date;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS]X")
+    private Date date;
+    String logLevel;
+    String method;
+    String path;
+    String requestData;
+
+    public Log(HttpServletRequest request) {
+        this.date = new Date();
+        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
+        this.method = request.getMethod();
+        this.path = request.getRequestURI();
+    }
+
+    public Log(HttpServletRequest request, String requestData) {
+        this.date = new Date();
+        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
+        this.method = request.getMethod();
+        this.path = request.getRequestURI();
         this.requestData = requestData;
-        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
-        this.date = new Timestamp(System.currentTimeMillis());
-    }
 
-    public Log(String path, String method) {
-        this.path = path;
-        this.method = method;
-        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
-        this.date = new Timestamp(System.currentTimeMillis());
-    }
-
-    public void showLog() {
-        if (this.requestData == null) {
+        if (requestData == null) {
             System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path);
         } else {
             System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path + " " + this.requestData);
         }
     }
-    public static void showLogWithNoParameter(HttpServletRequest request) {
-        new Log(request.getRequestURI(), request.getMethod()).showLog();
+
+    public void printLog() {
+        if (requestData == null) {
+            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path);
+        } else {
+            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path + " " + this.requestData);
+        }
     }
+
 }
