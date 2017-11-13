@@ -14,11 +14,9 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Component
 @Entity
 @Table(name = "users")
-
 public class User {
 
     @Id
@@ -27,4 +25,8 @@ public class User {
 
     @Column(unique = true)
     String userName;
+
+    public User(String userName) {
+        this.userName = userName;
+    }
 }

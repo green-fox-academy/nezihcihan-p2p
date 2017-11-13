@@ -20,8 +20,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 @Component
 @Entity
+@Table
 public class Log {
 
     @Id
@@ -53,20 +56,21 @@ public class Log {
         this.method = request.getMethod();
         this.path = request.getRequestURI();
         this.requestData = requestData;
-
-        if (requestData == null) {
-            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path);
-        } else {
-            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path + " " + this.requestData);
-        }
     }
 
-    public void printLog() {
-        if (requestData == null) {
-            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path);
-        } else {
-            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path + " " + this.requestData);
-        }
+//    public void printLog()  {
+//        if (requestData == null) {
+//            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path);
+//        } else {
+//            System.out.println(this.date + " " + this.logLevel + " " + this.method + " " + this.path + " " + this.requestData);
+//        }
+//    }
+    @Override
+    public String toString() {
+        return  ", date=" + date +
+                ", logLevel='" + logLevel + '\'' +
+                ", method='" + method + '\'' +
+                ", path='" + path + '\'' +
+                ", requestData='" + requestData + '\'';
     }
-
 }
