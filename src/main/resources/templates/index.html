@@ -51,10 +51,10 @@
         </thead>
         <tbody>
         <tr th:each="message : ${messages}">
-            <td scope="row" data-th-text="${message.username}"></td>
-            <td scope="row" data-th-text="${message.message}"></td>
-            <td scope="row" data-th-text="${message.timestamp}"></td>
-            <td scope="row" data-th-text="${message.id}"></td>
+            <td scope="row" data-th-text="${message.getUsername()}"></td>
+            <td scope="row" data-th-text="${message.getMessage()}"></td>
+            <td scope="row" data-th-text="${message.getTimestamp()}"></td>
+            <td scope="row" data-th-text="${message.getId()}"></td>
         </tr>
         </tbody>
     </table>

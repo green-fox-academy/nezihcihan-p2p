@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 
 @Controller
 @RequestMapping("")
@@ -29,15 +29,16 @@ public class MainController {
     @Autowired
     User user;
 
+
     @GetMapping("/")
     public String main(HttpServletRequest request, Model model) {
         model.addAttribute("users", userRepository.findAll());
         logChecker.printNormalLog(request);
         model.addAttribute("messages", messageRepository.findAllByOrderByTimestampDesc());
         model.addAttribute("username", user.getUsername());
+
         return "index";
     }
-
     @GetMapping("/enter")
     public String newUser(HttpServletRequest request) {
         logChecker.printNormalLog(request);
@@ -71,18 +72,20 @@ public class MainController {
     }
 
     @PostMapping("/update")
-    public String updateEntry(@ModelAttribute User user){
+    public String updateEntry(HttpServletRequest request, @ModelAttribute User user){
+        logChecker.printNormalLog(request);
         userRepository.save(user);
         return "redirect:/";
     }
 
     @PostMapping("/savemessage")
     public String create(HttpServletRequest request, @RequestParam("message") String message) {
-        messageRepository.save(new Message(message));
+        logChecker.printNormalLog(request);
+        Message myMessage = new Message();
+        myMessage.setUsername(user.getUsername());
+        myMessage.setMessage(message);
+        myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        messageRepository.save(myMessage);
         return "redirect:/";
     }
-
 }
-
-
-
