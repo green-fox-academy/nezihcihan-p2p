@@ -8,18 +8,12 @@
 <body>
 <div class="container">
     <!--//ADD NEW ENTRY-->
-    <h6>New User</h6>
-    <form method="post" name="form" id="form" th:action="@{/enter}" role="form">
+    <h6>Enter</h6>
+    <h2 th:if="${error != null}" th:text="${error}"></h2>
+    <form method="post" name="form" id="form" th:action="@{/create}" role="form">
         <div class="form-group">
-            <label for="username">Choose your username</label>
             <input class="form-control" type="text"  id="username" name="username"/>
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="description">Description</label>-->
-            <!--<input class="form-control" type="text"  id="description" name="description"/>-->
-            <!--<p></p>-->
-
-            <p><button type="submit" id="submit" class="btn btn-success" >Choose your username</button></p>
+            <p><button type="submit" id="submit" class="btn btn-success" >Add username</button></p><br/>
         </div>
     </form>
 </div>

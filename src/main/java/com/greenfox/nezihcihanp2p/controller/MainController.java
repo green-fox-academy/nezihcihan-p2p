@@ -1,61 +1,80 @@
 package com.greenfox.nezihcihanp2p.controller;
 
-import com.greenfox.nezihcihanp2p.model.ErrorHandling;
-import com.greenfox.nezihcihanp2p.model.Log;
-import com.greenfox.nezihcihanp2p.model.LogChecker;
+import com.greenfox.nezihcihanp2p.repository.MessageRepository;
+import com.greenfox.nezihcihanp2p.service.LogChecker;
 import com.greenfox.nezihcihanp2p.model.User;
-import com.greenfox.nezihcihanp2p.repository.LogRepository;
+
 import com.greenfox.nezihcihanp2p.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("")
 public class MainController {
 
     @Autowired
-    LogRepository logRepository;
-    @Autowired
     UserRepository userRepository;
     @Autowired
     LogChecker logChecker;
-
-//    @ExceptionHandler({MissingServletRequestParameterException.class,})
-//    public ErrorHandling handleMyException(MissingServletRequestParameterException missingParam) {
-//        ErrorHandling errorHandling = new ErrorHandling();
-//        if(missingParam.getParameterName().equals("username")) {
-//            errorHandling.setError("Please provide a username!");
-//        }
-//        return errorHandling;
-//    }
+    @Autowired
+    MessageRepository messageRepository;
+    @Autowired
+    User user;
 
     @GetMapping("/")
-    public String main(HttpServletRequest request) {
-        Log log = new Log(request);
-        logRepository.save(log);
-        logChecker.logMessageNoArg(request);
+    public String main(HttpServletRequest request, Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        logChecker.printNormalLog(request);
+        model.addAttribute("messages", messageRepository.findAllByOrderByTimestampDesc());
+        model.addAttribute("username", user.getUsername());
         return "index";
     }
 
     @GetMapping("/enter")
     public String newUser(HttpServletRequest request) {
-        Log log = new Log(request);
-        logRepository.save(log);
-        logChecker.logMessageNoArg(request);
+        logChecker.printNormalLog(request);
         return "enter";
     }
+    @PostMapping("/create")
+    public String enter(HttpServletRequest request,String username, Model model) {
+        logChecker.printNormalLog(request);
+        if (!StringUtils.isEmpty(username)) {
+            user.setId(1);
+            user.setUsername(username);
+            userRepository.save(user);
+            return "redirect:/";
+        }
+        else {
+        logChecker.printErrorLog(request);
+        String errorMessage = "The username field is empty";
+        user.setUsername("");
+        model.addAttribute("error", errorMessage);
+        return "enter";
+        }
+    }
+    //UPDATE USERNAME
+    @GetMapping("/{id}/edit")
+    public String edit(HttpServletRequest request,@PathVariable long id, Model model) {
+        logChecker.printNormalLog(request);
+        User user = userRepository.findOne(id);
+        model.addAttribute("user", user);
+        userRepository.equals(user);
+        return "edit";
+    }
 
-    @PostMapping("/enter")
-    public ModelAndView enter(@RequestParam("username") String username,HttpServletRequest request) throws Exception {
-        userRepository.save(new User(username));
-        Log log = new Log(request);
-        logRepository.save(log);
-        logChecker.logMessageWithArg(request,username);
-        return new ModelAndView("redirect:/");
+    @PostMapping("/update")
+    public String updateEntry(@ModelAttribute User user){
+        userRepository.save(user);
+        return "redirect:/";
     }
 }
+
+
+

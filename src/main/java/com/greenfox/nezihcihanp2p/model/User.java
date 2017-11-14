@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+
 import javax.persistence.*;
 
 
@@ -23,10 +24,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
-    String userName;
+    private String username;
 
-    public User(String userName) {
-        this.userName = userName;
+    public User(String username) {
+        this.username = username;
     }
 }
