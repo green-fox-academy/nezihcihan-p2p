@@ -24,8 +24,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-//    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-//    private Message message;
 
     private String username;
 

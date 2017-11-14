@@ -81,7 +81,7 @@ public class MainController {
     @PostMapping("/savemessage")
     public String create(HttpServletRequest request, @RequestParam("message") String message) {
         logChecker.printNormalLog(request);
-        Message myMessage = new Message();
+        Message myMessage = new Message(message);
         myMessage.setUsername(user.getUsername());
         myMessage.setMessage(message);
         myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
