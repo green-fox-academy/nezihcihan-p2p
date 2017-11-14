@@ -1,5 +1,6 @@
 package com.greenfox.nezihcihanp2p.controller;
 
+import com.greenfox.nezihcihanp2p.model.Message;
 import com.greenfox.nezihcihanp2p.repository.MessageRepository;
 import com.greenfox.nezihcihanp2p.service.LogChecker;
 import com.greenfox.nezihcihanp2p.model.User;
@@ -74,6 +75,13 @@ public class MainController {
         userRepository.save(user);
         return "redirect:/";
     }
+
+    @PostMapping("/savemessage")
+    public String create(HttpServletRequest request, @RequestParam("message") String message) {
+        messageRepository.save(new Message(message));
+        return "redirect:/";
+    }
+
 }
 
 

@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -22,6 +21,10 @@ public class Message {
     private long id;
 
     String message;
-    String userName;
+    String username;
     Timestamp timestamp;
+
+    public Message(String message) {
+        this.message = message;
+    }
 }
