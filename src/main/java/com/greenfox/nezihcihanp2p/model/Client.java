@@ -1,5 +1,6 @@
 package com.greenfox.nezihcihanp2p.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Client {
 
-    @JsonProperty(value = "id")
     String id;
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.greenfox.nezihcihanp2p.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,21 +15,21 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Component
-//@Table(name = "messages")
+@Table(name = "messages")
 public class Message {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private long id;
     @Id
     private long id;
     private String username;
-    private String message;
+    private String text;
     private Timestamp timestamp;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "chat_user_id")
+    User user;
+
     public Message(String message) {
-        this.message = message;
+        this.text = message;
         this.id = 1000000L + (long) (Math.random() * (9999999L - 1000000L));
     }
 
@@ -37,7 +38,7 @@ public class Message {
         return "Message{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", message='" + message + '\'' +
+                ", message='" + text + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

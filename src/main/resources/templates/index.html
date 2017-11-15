@@ -6,57 +6,58 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
 </head>
 <body>
+
 <div class="container">
-<h2>P2P Chat Application</h2>
-<div class="form-group">
-    <a href="/enter"><button type="submit" id="submit" class="btn btn-success" >Enter</button></a>
-</div>
+<h3>P2P Chat Application</h3>
+    <!--//ENTER BUTTON-->
+    <a href="/enter" ><button type="submit" class="btn btn-success" >Enter</button></a><br/>
+
+    <!--//TABLE-->
 <table class="table table-hover table-dark">
-    <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">username</th>
+        <th scope="col">Username</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="user : ${users}">
-        <td scope="row" data-th-text="${user.id}"></td>
-        <td scope="row" data-th-text="${user.username}"></td>
+    <tr th:each="user : ${users}">
+        <td scope="row" th:text="${user.id}"></td>
+        <td scope="row" th:text="${user.username}"></td>
         <td>
             <a th:href="@{'/{id}/edit'(id=${user.id})}" class="edit" th:attr="name=${user}">
                 <button type="submit" id="edit" class="btn btn-success">update username</button>
             </a>
         </td>
     </tr>
-    </tbody>
 </table>
+
+    <!--//UNORDERED LIST-->
     <ul>
-        <li>Hi there!Submit your message using the send button!</li>
+        <li>Hi there!</li>
+        <li>Submit your message using the send button!</li>
     </ul>
-    <form method="post" name="form" id="form" th:action="@{/savemessage}" role="form">
+
+    <!--//SUBMIT BUTTON-->
+    <form method="post" th:action="@{/savemessage}" role="form">
         <div class="form-group">
-            <input class="form-control" type="text"  id="message" name="message"/>
+            <input class="form-control" type="text"  id="chatmessage" name="chatmessage"/>
             <p></p>
             <p><button type="submit" id="submit" class="btn btn-success" >Send</button></p>
         </div>
     </form>
+
+    <!--//TABLE-->
     <table class="table table-hover table-dark">
-        <thead>
         <tr>
-            <th scope="col">username</th>
-            <th scope="col">messages</th>
-            <th scope="col">timestamp</th>
-            <th scope="col">Id</th>
+            <th scope="col">Username</th>
+            <th scope="col">Messages</th>
+            <th scope="col">Timestamp</th>
+            <!--<th scope="col">Id</th>-->
         </tr>
-        </thead>
-        <tbody>
         <tr th:each="message : ${messages}">
-            <td scope="row" data-th-text="${message.getUsername()}"></td>
-            <td scope="row" data-th-text="${message.getMessage()}"></td>
-            <td scope="row" data-th-text="${message.getTimestamp()}"></td>
-            <td scope="row" data-th-text="${message.getId()}"></td>
+            <td scope="row" th:text="${chatmessage.getUsername()}"></td>
+            <td scope="row" th:text="${chatmessage.getMessage()}"></td>
+            <td scope="row" th:text="${chatmessage.getTimestamp()}"></td>
+            <!--<td scope="row" th:text="${chatmessage.getId()}"></td>-->
         </tr>
-        </tbody>
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

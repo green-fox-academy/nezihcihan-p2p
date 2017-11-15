@@ -6,11 +6,11 @@
 </head>
 <body>
 <h2>Update Username</h2>
-
+<!--//TEXT AREA & UPDATE BUTTON-->
 <form th:action="@{'/update'}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    <input rows="1" type="text" th:field="*{username}"/>
-    <p><button type="submit" value="Submit">Submit</button></p>
+    <input rows="1" th:type="text" th:field="*{username}"/>
+    <button type="submit">Submit</button><br/>
 </form>
 </body>
 </html>

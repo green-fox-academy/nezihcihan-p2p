@@ -1,17 +1,15 @@
 package com.greenfox.nezihcihanp2p.controller;
 
-import com.greenfox.nezihcihanp2p.model.Message;
+import com.greenfox.nezihcihanp2p.model.*;
 import com.greenfox.nezihcihanp2p.repository.MessageRepository;
 import com.greenfox.nezihcihanp2p.service.LogChecker;
-import com.greenfox.nezihcihanp2p.model.User;
-
 import com.greenfox.nezihcihanp2p.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -29,6 +27,7 @@ public class MainController {
     @Autowired
     User user;
 
+    RestTemplate template = new RestTemplate();
 
     @GetMapping("/")
     public String main(HttpServletRequest request, Model model) {
@@ -48,7 +47,7 @@ public class MainController {
     public String enter(HttpServletRequest request,String username, Model model) {
         logChecker.printNormalLog(request);
         if (!StringUtils.isEmpty(username)) {
-            user.setId(1);
+            user.setId(1L);
             user.setUsername(username);
             userRepository.save(user);
             return "redirect:/";
@@ -79,13 +78,17 @@ public class MainController {
     }
 
     @PostMapping("/savemessage")
-    public String create(HttpServletRequest request, @RequestParam("message") String message) {
+    public Object create(HttpServletRequest request, @RequestParam("chatmessage") String chatmessage) {
         logChecker.printNormalLog(request);
-        Message myMessage = new Message(message);
+        Message myMessage = new Message();
         myMessage.setUsername(user.getUsername());
-        myMessage.setMessage(message);
+        myMessage.setText(chatmessage);
         myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageRepository.save(myMessage);
-        return "redirect:/";
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//        ReceivedMessage receivedMessage = new ReceivedMessage(chatmessage, new Client("nezihcihan"));
+//        Response response= restTemplate.postForObject("http://localhost:8080/api/message/receive", Response.class);
+      return "redirect:/";
     }
 }

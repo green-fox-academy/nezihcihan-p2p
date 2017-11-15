@@ -32,4 +32,6 @@ dependencies {
 	runtime('com.h2database:h2')
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("com.fasterxml.jackson.core:jackson-databind")
+	testCompile("junit:junit")
 }
