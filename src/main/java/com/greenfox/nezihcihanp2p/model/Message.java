@@ -28,8 +28,8 @@ public class Message {
     @JoinColumn(name = "chat_user_id")
     User user;
 
-    public Message(String message) {
-        this.text = message;
+    public Message(String text) {
+        this.text = text;
         this.id = 1000000L + (long) (Math.random() * (9999999L - 1000000L));
     }
 

@@ -78,17 +78,18 @@ public class MainController {
     }
 
     @PostMapping("/savemessage")
-    public Object create(HttpServletRequest request, @RequestParam("chatmessage") String chatmessage) {
+    public Object create(HttpServletRequest request, @RequestParam("message") String message) {
         logChecker.printNormalLog(request);
         Message myMessage = new Message();
         myMessage.setUsername(user.getUsername());
-        myMessage.setText(chatmessage);
+        myMessage.setText(message);
         myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageRepository.save(myMessage);
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        ReceivedMessage receivedMessage = new ReceivedMessage(chatmessage, new Client("nezihcihan"));
-//        Response response= restTemplate.postForObject("http://localhost:8080/api/message/receive", Response.class);
+
+//        RestTemplate template = new RestTemplate();
+//        String result = template.getForObject("http://index.hu", String.class);
+//        System.out.println(result);
+
       return "redirect:/";
     }
 }
