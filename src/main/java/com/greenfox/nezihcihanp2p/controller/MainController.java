@@ -27,9 +27,7 @@ public class MainController {
     @Autowired
     User user;
 
-    RestTemplate template = new RestTemplate();
-
-    @GetMapping("/")
+   @GetMapping("/")
     public String main(HttpServletRequest request, Model model) {
         model.addAttribute("users", userRepository.findAll());
         logChecker.printNormalLog(request);
@@ -86,10 +84,23 @@ public class MainController {
         myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageRepository.save(myMessage);
 
-//        RestTemplate template = new RestTemplate();
-//        String result = template.getForObject("http://index.hu", String.class);
-//        System.out.println(result);
+        RestTemplate restTemplate = new RestTemplate();
+
+        Client client = new Client();
+        client.setId(System.getenv("CHAT_APP_UNIQUE_ID"));
+        ReceivedMessage receivedMessage = new ReceivedMessage();
+        receivedMessage.setMessage(myMessage);
+        receivedMessage.setClient(client);
+        messageRepository.save(myMessage);
+
+        try {
+        restTemplate
+        .postForObject(System.getenv("CHAT_APP_PEER_ADDRESS"), receivedMessage, Response.class);
+        } catch (Exception e) {
+        System.err.println(e.getMessage());
+        }
 
       return "redirect:/";
     }
 }
+
