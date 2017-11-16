@@ -93,12 +93,10 @@ public class MainController {
         receivedMessage.setClient(client);
         messageRepository.save(myMessage);
 
-        try {
+
         restTemplate
         .postForObject(System.getenv("CHAT_APP_PEER_ADDRESS"), receivedMessage, Response.class);
-        } catch (Exception e) {
-        System.err.println(e.getMessage());
-        }
+
 
       return "redirect:/";
     }
