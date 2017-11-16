@@ -22,20 +22,20 @@ public class RestController {
     @Autowired
     MessageRepository messageRepository;
 
-
     @CrossOrigin("*")
     @PostMapping("/api/message/receive")
-    public Response receive(@RequestBody(required = true) ReceivedMessage receivedMessage) {
+    public Response receive(@RequestBody ReceivedMessage receivedMessage) {
         System.out.println(receivedMessage.getClient().getId());
-
 
         RestTemplate restTemplate = new RestTemplate();
 
         if (!receivedMessage.getClient().getId().equals(System.getenv("CHAT_APP_UNIQUE_ID"))) {
-
+            try {
                 restTemplate
                         .postForObject(System.getenv("CHAT_APP_PEER_ADDRESS"), receivedMessage, Response.class);
-
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
 
         Message received = new Message();

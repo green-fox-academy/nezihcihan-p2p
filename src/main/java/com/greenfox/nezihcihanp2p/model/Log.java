@@ -19,8 +19,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 @Component
 @Entity
 public class Log {

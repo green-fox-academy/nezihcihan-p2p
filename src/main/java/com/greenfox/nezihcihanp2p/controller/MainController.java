@@ -27,7 +27,7 @@ public class MainController {
     @Autowired
     User user;
 
-   @GetMapping("/")
+    @GetMapping("/")
     public String main(HttpServletRequest request, Model model) {
         model.addAttribute("users", userRepository.findAll());
         logChecker.printNormalLog(request);
@@ -51,11 +51,11 @@ public class MainController {
             return "redirect:/";
         }
         else {
-        logChecker.printErrorLog(request);
-        String errorMessage = "The username field is empty";
-        user.setUsername("");
-        model.addAttribute("error", errorMessage);
-        return "enter";
+            logChecker.printErrorLog(request);
+            String errorMessage = "The username field is empty";
+            user.setUsername("");
+            model.addAttribute("error", errorMessage);
+            return "enter";
         }
     }
     //UPDATE USERNAME
@@ -83,7 +83,6 @@ public class MainController {
         myMessage.setText(message);
         myMessage.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageRepository.save(myMessage);
-
         RestTemplate restTemplate = new RestTemplate();
 
         Client client = new Client();
@@ -93,12 +92,13 @@ public class MainController {
         receivedMessage.setClient(client);
         messageRepository.save(myMessage);
 
+        try {
+            restTemplate
+                    .postForObject(System.getenv("CHAT_APP_PEER_ADDRESS"), receivedMessage, Response.class);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
-        restTemplate
-        .postForObject(System.getenv("CHAT_APP_PEER_ADDRESS"), receivedMessage, Response.class);
-
-
-      return "redirect:/";
+        return "redirect:/";
     }
 }
-
