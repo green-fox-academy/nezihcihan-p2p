@@ -1,13 +1,6 @@
 package com.greenfox.nezihcihanp2p.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ReceivedMessage {
 
     Message message;
@@ -18,11 +11,22 @@ public class ReceivedMessage {
         this.client = client;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "message=" + message +
-                ", client=" + client +
-                '}';
+    public ReceivedMessage() {
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

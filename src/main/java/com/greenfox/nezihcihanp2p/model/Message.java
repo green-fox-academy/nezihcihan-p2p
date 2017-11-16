@@ -1,19 +1,8 @@
 package com.greenfox.nezihcihanp2p.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -24,22 +13,56 @@ public class Message {
     private String text;
     private Timestamp timestamp;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "chat_user_id")
-    User user;
-
     public Message(String text) {
         this.text = text;
         this.id = 1000000L + (long) (Math.random() * (9999999L - 1000000L));
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", message='" + text + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+    public long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Message(long id, String username, String text, Timestamp timestamp) {
+        this.id = id;
+        this.username = username;
+        this.text = text;
+        this.timestamp = timestamp;
+    }
+
+    public Message() {
+    }
+
+    public Message(String username, String text, Timestamp timestamp) {
+        this.username = username;
+        this.text = text;
+        this.timestamp = timestamp;
     }
 }

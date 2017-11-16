@@ -9,5 +9,4 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
     Iterable<Message> findAllByOrderByTimestampDesc();
-    List<Message> findByUser(User user);
 }
